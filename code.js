@@ -5,12 +5,25 @@ function isMobile() {
 }
 
 function init(){
-    console.log("init")
-  if(!(isMobile())){
+  if(!(isMobile())){// if browser is not mobile, convert venmo links to web style
     for(const link of document.querySelectorAll("a")){
-        if(link.href.includes("venmo")){
-            alert(link)
+        if(link.href.startsWith("venmo")){
+            convertVenmoLink(link)
         }
     }
   }
+}
+
+function convertVenmoLink(link){
+    params=link.href.split("?")[1].split("&")
+    let url="https://venmo.com/"
+    for(let x=0;x<params.length;x++){
+        if(params[x].startsWith("recipients")){
+          url+=params.splice(x, 1)[0].split("=")[1]
+          break
+        }
+    }
+    if(params.length>0){url+="?" + params.join("&")}
+    link.href=url
+    
 }
