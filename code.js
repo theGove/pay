@@ -29,9 +29,9 @@ function convertVenmoLink(link){
 }
 
 function showQR(){
+  
   const url=document.referrer
-fetch(url)
-  .then(response => {
+  fetch(url).then(response => {
     // Check if the response was successful (e.g., HTTP status 200-299)
     if (!response.ok) {
       throw new Error(`HTTP error! status: ${response.status}`);
@@ -47,7 +47,7 @@ fetch(url)
     // Handle any errors that occurred during the fetch or parsing
     console.error('Error fetching data:', error);
   });  
-  new QRCode(document.getElementById("qrcode"), url);
+  new QRCode("qrcode", {text:url,correctLevel : QRCode.CorrectLevel.M});
   tag("url").innerHTML = url
 
 
