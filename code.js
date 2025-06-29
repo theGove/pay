@@ -27,3 +27,32 @@ function convertVenmoLink(link){
     link.href=url
     
 }
+
+function showQR(){
+  const url=document.referrer
+fetch(url)
+  .then(response => {
+    // Check if the response was successful (e.g., HTTP status 200-299)
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+    // Parse the response body as JSON
+    return response.text();
+  })
+  .then(data => {
+    // Work with the parsed data
+  tag("heading").innerHTML=data.split('<div class="heading">')[1].split("</div>")[0].trim()  
+  })
+  .catch(error => {
+    // Handle any errors that occurred during the fetch or parsing
+    console.error('Error fetching data:', error);
+  });  
+  new QRCode(document.getElementById("qrcode"), url);
+  tag("url").innerHTML = url
+
+
+}
+
+function tag(id){
+  return document.getElementById(id)
+}
